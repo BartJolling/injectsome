@@ -2,13 +2,13 @@ var injectsome = (function (injectsomeInstance, undefined) {
 
 	/**
 	 * Contains functions to inject blocks of content into the HTML page
-	 * */
+	 */
 	injectsomeInstance.content = (function(contentInstance) {
 		/**
 		 * Injects a block of javascript into a new script tag in the HEAD of a document.
 		 * @param {string} jsContent - javascript code to inject.
 		 * @param {string} scriptId - Id of the script tag that will be injected.
-		 * */
+		 */
 		contentInstance.script = function(jsContent, scriptId) {
 			var existingElement = document.getElementById(scriptId);
 
@@ -27,9 +27,8 @@ var injectsome = (function (injectsomeInstance, undefined) {
 		/**
 		 * Appends a block of HTML to the body tag
 		 * @param {string} htmlContent - HTML to inject.
-		 * */
+		 */
 		contentInstance.html = function(htmlContent) {
-
 			var div = document.createElement('div');
 			div.innerHTML = htmlContent;
 
@@ -38,19 +37,28 @@ var injectsome = (function (injectsomeInstance, undefined) {
 			}
 		}
 
+		/**
+		 * Appends a block of css to the head tag
+		 * @param {string} cssContent - CSS to inject.
+		 */
+		contentInstance.css = function(cssContent) {
+			var styleElement = document.createElement('style');
+			styleElement.innerHTML = cssContent;
+			document.head.appendChild(styleElement);
+		}		
+
 		return contentInstance;
 	}(injectsomeInstance.content || {}));
 
-
 	/**
 	 * Contains functions to inject links to external content into the HTML page
-	 * */
+	 */
 	injectsomeInstance.links = (function(linksInstance) {
 
 		/**
 		 * Injects a link to a javascript file in the HEAD of a document.
 		 * @param {string} url - location of the javascript file to inject.
-		 * */
+		 */
 		linksInstance.script = function(url, mimetype) {
 			var scriptElement = document.createElement('script');
 			scriptElement.setAttribute("type", mimetype);
@@ -62,7 +70,7 @@ var injectsome = (function (injectsomeInstance, undefined) {
 		/**
 		 * Injects a link to a stylesheet in the HEAD of a document.
 		 * @param {string} url - location of the javascript file to inject.
-		 * */
+		 */
 		linksInstance.stylesheet = function(url, mimetype) {
 			var linkElement = document.createElement("link");
 			linkElement.setAttribute("rel", "stylesheet");
