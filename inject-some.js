@@ -12,8 +12,8 @@ var injectsome = (function (injectsomeInstance, undefined) {
 		contentInstance.script = function(jsContent, scriptId) {
 			var existingElement = document.getElementById(scriptId);
 
-			if(existingElement !== null && existingElement.type === "text/javascript") {
-				console.log("[injectsome][content] Script " + scriptId + " already injected. Skipping.");
+			if(existingElement !== null && existingElement !== undefined) {
+				console.log("[injectsome][content] Element with id " + scriptId + " already exists. Skipping.");
 				return;
 			}
 
@@ -40,8 +40,16 @@ var injectsome = (function (injectsomeInstance, undefined) {
 		/**
 		 * Appends a block of css to the head tag
 		 * @param {string} cssContent - CSS to inject.
+		 * @param {string} cssId - Id of the style tag that will be injected.
 		 */
-		contentInstance.css = function(cssContent) {
+		contentInstance.css = function(cssContent, cssId) {
+			var existingElement = document.getElementById(cssId);
+
+			if(existingElement !== null && existingElement !== undefined) {
+				console.log("[injectsome][content] Element with id " + cssId + " already exists. Skipping.");
+				return;
+			}			
+
 			var styleElement = document.createElement('style');
 			styleElement.innerHTML = cssContent;
 			document.head.appendChild(styleElement);
