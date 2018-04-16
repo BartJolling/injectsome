@@ -7,7 +7,7 @@ When creating a user script that can be executed by for example Tampermonkey or 
 
 https://github.com/BartJolling/delegarity/blob/master/delegarity.user.js
 
-In this example, I'm also using the ```GM_getResourceText``` extension method to load 'content' that's included with my extension but you could just as well load literal HTML, CSS or javascript or use the 'links' API to insert references to external files.
+Note that the example below uses the ```GM_getResourceText``` extension method to load 'content' that's included with the extension. You could just as well load literal HTML, CSS or javascript or use the 'links' API to insert references to external files.
 
 ```javascript
 // ==UserScript==
@@ -38,28 +38,30 @@ In this example, I'm also using the ```GM_getResourceText``` extension method to
 })();    
 ```
 
+
 ## content API
 Allows injecting the full literal content into a target page.
 ### injectsome.content.script(jsContent, scriptId)
 Injects a block of javascript into a new script tag in the HEAD of a document.
-- @param {string} jsContent - javascript code to inject.
-- @param {string} scriptId - Id of the script tag that will be injected.
+- {string} jsContent - javascript code to inject.
+- {string} scriptId - Id of the script tag that will be injected.
 
 ### injectsome.content.html(htmlContent)
 Appends a block of HTML to the body tag
-- @param {string} htmlContent - HTML to inject.
+- {string} htmlContent - HTML to inject.
 
 ### injectsome.content.css(cssContent, cssId)
 Appends a block of css to the head tag
-- @param {string} cssContent - CSS to inject.
-- @param {string} cssId - Id of the style tag that will be injected.
+- {string} cssContent - CSS to inject.
+- {string} cssId - Id of the style tag that will be injected.
+
 
 ## links API
 Allows injecting links to script or css files into a target page.
 ### injectsome.links.script (url, mimetype)
 Injects a link to a javascript file in the HEAD of a document.
-- @param {string} url - location of the javascript file to inject.
+- {string} url - location of the javascript file to inject.
 
 ### injectsome.links.stylesheet (url, mimetype)		
 Injects a link to a stylesheet in the HEAD of a document.
-- @param {string} url - location of the stylesheet file to inject.
+- {string} url - location of the stylesheet file to inject.
