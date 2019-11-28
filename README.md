@@ -3,12 +3,52 @@
 inject-some is Javascript helper library to assist in injecting scripts, styles and html from userscripts. Tested with the Greasmonkey extension on Firefox and with the TamperMonkey extension on Google Chrome and Microsoft Edge.
 
 ## Examples
-When creating a user script that can be executed by for example Tampermonkey or Greasemonkey, inject additional javascript, html and/or css from the user.js file. The 'delegarity' user script for the Clarity web application and the 'jira-issue-clone' user script for JIRA have some examples to insert additional content into the target page.
+These examples show how to inject additional javascript, html and/or css from the user.js file itself or from resource files, when creating userscripts for Tampermonkey or Greasemonkey.
 
-- https://github.com/BartJolling/delegarity/blob/master/delegarity.user.js
-- https://github.com/BartJolling/jira-issue-clone/blob/master/jira-issue-clone.user.js
+### inject script itself.
+The 'jira-issue-clone' user script for JIRA is an example of how a user script can inject itself into a page:
 
-Note that the example below uses the ```GM_getResourceText``` extension method to load 'content' that's included with the extension. You could just as well load literal HTML, CSS or javascript or use the 'links' API to insert references to external files.
+https://github.com/BartJolling/jira-issue-clone/blob/master/jira-issue-clone.user.js
+
+The `scriptToInject( )` function is serialized to string and then embedded in a `<script>` tag.
+
+```javascript
+// ==UserScript==
+// @require     https://raw.githubusercontent.com/BartJolling/inject-some/master/inject-some.js
+// @downloadURL https://raw.githubusercontent.com/BartJolling/jira-issue-clone/master/jira-issue-clone.user.js
+// @grant       none
+// @run-at      document-end
+// ==/UserScript==
+
+/**
+ * Script to be injected directly into the page
+ */
+var scriptToInject = function ($) {
+
+  //... snipped ...
+
+};
+
+/**
+ *Main function to inject the code of the jira-issue-clone extension into the JIRA website
+ */
+(function (callback) {
+    'use strict';
+    try {
+        var scripts = "(" + callback.toString() + ")(window.AJS.$);";
+        injectsome.content.script(scripts);
+    } catch (err) {
+        console.log('[jira-issue-clone] ' + err.message);
+    }
+})(scriptToInject);
+```
+
+### inject from separate files.
+The 'delegarity' user script for the Clarity web application has examples to insert additional content, taken from resource files included in the 'delegarity' script, into the target page:
+
+https://github.com/BartJolling/delegarity/blob/master/delegarity.user.js
+
+Note that the example below uses the `GM_getResourceText` extension method to load 'content' that's included with the extension. You could just as well load literal HTML, CSS or javascript or use the 'links' API to insert references to external files.
 
 ```javascript
 // ==UserScript==
@@ -42,23 +82,25 @@ Note that the example below uses the ```GM_getResourceText``` extension method t
 
 ## content API
 Allows injecting the full literal content into a target page.
+
 ### injectsome.content.script(jsContent, scriptId)
 Injects a block of javascript into a new script tag in the HEAD of a document.
 - {string} jsContent - javascript code to inject.
 - {string} scriptId - Id of the script tag that will be injected.
 
 ### injectsome.content.html(htmlContent)
-Appends a block of HTML to the body tag
+Appends a block of HTML to the body tag.
 - {string} htmlContent - HTML to inject.
 
 ### injectsome.content.css(cssContent, cssId)
-Appends a block of css to the head tag
+Appends a block of css to the head tag.
 - {string} cssContent - CSS to inject.
 - {string} cssId - Id of the style tag that will be injected.
 
 
 ## links API
 Allows injecting links to script or css files into a target page.
+
 ### injectsome.links.script (url, mimetype)
 Injects a link to a javascript file in the HEAD of a document.
 - {string} url - location of the javascript file to inject.
