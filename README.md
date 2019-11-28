@@ -10,12 +10,11 @@ The 'jira-issue-clone' user script for JIRA is an example of how a user script c
 
 https://github.com/BartJolling/jira-issue-clone/blob/master/jira-issue-clone.user.js
 
-The `scriptToInject( )` function is serialized to string and then embedded in a `<script>` tag.
+The `scriptToInject( )` function is serialized to string and then embedded in a `<script>` tag. Note that `window.AJS.$` is the jQuery namespace in JIRA which is the target application for jira-issue-clone.
 
 ```javascript
 // ==UserScript==
 // @require     https://raw.githubusercontent.com/BartJolling/inject-some/master/inject-some.js
-// @downloadURL https://raw.githubusercontent.com/BartJolling/jira-issue-clone/master/jira-issue-clone.user.js
 // @grant       none
 // @run-at      document-end
 // ==/UserScript==
