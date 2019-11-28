@@ -1,11 +1,12 @@
 # inject-some
 ## Description
-inject-some is Javascript helper library to assist in injecting scripts, styles and html from userscripts. Tested with TamperMonkey.
+inject-some is Javascript helper library to assist in injecting scripts, styles and html from userscripts. Tested with the Greasmonkey extension on Firefox and with the TamperMonkey extension on Google Chrome and Microsoft Edge.
 
 ## Examples
-When creating a user script that can be executed by for example Tampermonkey or Greasemonkey, inject additional javascript, html and/or css from the user.js file. The 'delegarity' extension for the Clarity web application has some examples to insert additional content into the target page.
+When creating a user script that can be executed by for example Tampermonkey or Greasemonkey, inject additional javascript, html and/or css from the user.js file. The 'delegarity' user script for the Clarity web application and the 'jira-issue-clone' user script for JIRA have some examples to insert additional content into the target page.
 
 https://github.com/BartJolling/delegarity/blob/master/delegarity.user.js
+https://github.com/BartJolling/jira-issue-clone/blob/master/jira-issue-clone.user.js
 
 Note that the example below uses the ```GM_getResourceText``` extension method to load 'content' that's included with the extension. You could just as well load literal HTML, CSS or javascript or use the 'links' API to insert references to external files.
 
@@ -61,7 +62,9 @@ Allows injecting links to script or css files into a target page.
 ### injectsome.links.script (url, mimetype)
 Injects a link to a javascript file in the HEAD of a document.
 - {string} url - location of the javascript file to inject.
+- {string} mimetype - sets the 'type' attribute of the script tag.
 
 ### injectsome.links.stylesheet (url, mimetype)		
 Injects a link to a stylesheet in the HEAD of a document.
 - {string} url - location of the stylesheet file to inject.
+- {string} mimetype - sets the 'type' attribute of the script tag.
