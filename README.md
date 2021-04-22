@@ -1,16 +1,16 @@
 # inject-some
 
-inject-some is Javascript helper library to assist in injecting scripts, styles and html from userscripts. Tested with the Greasmonkey extension on Firefox and with the TamperMonkey extension on Google Chrome and Microsoft Edge.
+inject-some is Javascript helper library to assist in injecting scripts, styles and html from userscripts. Tested with the Greasemonkey extension on Firefox and with the TamperMonkey extension on Google Chrome and Microsoft Edge.
 
 ## Examples
 These examples show how to inject additional javascript, html and/or css from the user.js file itself or from resource files, when creating userscripts for Tampermonkey or Greasemonkey.
 
-### inject script itself.
+### script injects itself.
 The 'jira-issue-clone' user script for JIRA is an example of how a user script can inject itself into a page:
 
 https://github.com/BartJolling/jira-issue-clone/blob/master/jira-issue-clone.user.js
 
-The `scriptToInject( )` function is serialized to string and then embedded in a `<script>` tag. Note that `window.AJS.$` is the jQuery namespace in JIRA which is the target application for jira-issue-clone.
+The `scriptToInject( )` function is serialized to a string and then embedded in a `<script>` tag. Note that in the example below, `window.AJS.$` is the jQuery namespace in JIRA which is the target application for jira-issue-clone.
 
 ```javascript
 // ==UserScript==
@@ -42,8 +42,8 @@ var scriptToInject = function ($) {
 })(scriptToInject);
 ```
 
-### inject from separate files.
-The 'delegarity' user script for the Clarity web application has examples to insert additional content, taken from resource files included in the 'delegarity' script, into the target page:
+### inject scripts from other files.
+The 'delegarity' user script for the Clarity web application has examples on inserting additional content, taken from resource files included in the 'delegarity' script, into the target page:
 
 https://github.com/BartJolling/delegarity/blob/master/delegarity.user.js
 
@@ -80,25 +80,24 @@ Note that the example below uses the `GM_getResourceText` extension method to lo
 
 
 ## content API
-Allows injecting the full literal content into a target page.
+The `injectsome.content` API allows injecting the full literal content into a target page.
 
-### injectsome.content.script(jsContent, scriptId)
+### injectsome.content.script (jsContent, scriptId)
 Injects a block of javascript into a new script tag in the HEAD of a document.
 - {string} jsContent - javascript code to inject.
-- {string} scriptId - Id of the script tag that will be injected.
+- {string} scriptId - Id of the script tag that will be injected. Used for duplicate check.
 
-### injectsome.content.html(htmlContent)
+### injectsome.content.html (htmlContent)
 Appends a block of HTML to the body tag.
 - {string} htmlContent - HTML to inject.
 
-### injectsome.content.css(cssContent, cssId)
+### injectsome.content.css (cssContent, cssId)
 Appends a block of css to the head tag.
 - {string} cssContent - CSS to inject.
-- {string} cssId - Id of the style tag that will be injected.
-
+- {string} cssId - Id of the style tag that will be injected. Used for duplicate check.
 
 ## links API
-Allows injecting links to script or css files into a target page.
+The `injectsome.links` API allows injecting links to script or css files into a target page.
 
 ### injectsome.links.script (url, mimetype)
 Injects a link to a javascript file in the HEAD of a document.
