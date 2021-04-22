@@ -51,6 +51,7 @@ var injectsome = (function (injectsomeInstance, undefined) {
 			}			
 
 			var styleElement = document.createElement('style');
+			styleElement.setAttribute("id", cssId);
 			styleElement.innerHTML = cssContent;
 			document.head.appendChild(styleElement);
 		}		
